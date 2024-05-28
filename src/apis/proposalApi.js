@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://example.com/api';
+const API_BASE_URL = 'http://localhost:8080';
 
 
 class ProposalAPI {

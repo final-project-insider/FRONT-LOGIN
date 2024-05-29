@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getProposals, deleteProposal } from './apis/ProposalApi';
+import React from 'react';
+import ProposalApi from '../../apis/ProposalApi';
 
 const AdminProposalPage = () => {
     const [proposals, setProposals] = useState([]);

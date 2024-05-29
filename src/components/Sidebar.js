@@ -128,11 +128,11 @@ function Sidebar() {
                                 <i className="bi bi-circle"></i><span>부서 및 직급 관리</span>
                             </Link>
                         </li>
-                        {/* <li>
-                            <Link to="/" style={underLineStyle}>
+                        { <li>
+                            <Link to="/ProposalPage" style={underLineStyle}>
                                 <i className="bi bi-circle"></i><span>건의함</span>
                             </Link>
-                        </li> */}
+                        </li> }
                     </ul>
                 </li>
                 <li className={`nav-item ${location.pathname === '/insite' ? 'active' : ''}`}>
@@ -150,8 +150,8 @@ function Sidebar() {
                         <i className="bi bi-clipboard-check"></i><span>수요조사</span>
                     </Link>
                 </li>
-                <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                    <Link className={`nav-link ${location.pathname === '/' ? '' : 'nav-link-main-cal collapsed'}`} to="/">
+                <li className={`nav-item ${location.pathname === '/ProposalPage' ? 'active' : ''}`}>
+                    <Link className={`nav-link ${location.pathname === '/ProposalPage' ? '' : 'nav-link-main-cal collapsed'}`} to="/">
                         <i className="bi bi-exclamation-square"></i><span>건의함</span>
                     </Link>
                 </li>

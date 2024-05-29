@@ -1,38 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { getProposals } from '../apis/proposalApi';
-import ProposalForm from '../components/proposal/ProposalForm';
-import AdminProposalPage from './Proposal/AdminProposalPage';
+import ProposalApi from '../../apis/ProposalApi';
+import ProposalForm from '../../components/proposal/ProposalForm';
+import AdminProposalPage from './AdminProposalPage';
 
-const ProposalPage = ({ isAdmin = false, memberId = 192192 }) => {
-    const [proposals, setProposals] = useState([]);
-    const [error, setError] = useState(null);
+const ProposalPage = ({ memberId = 192192 }) => {
+  const [proposals, setProposals] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  useEffect(() => {
     const fetchProposals = async () => {
-        try {
-            const data = await getProposals();
-            setProposals(data);
-        } catch (error) {
-            setError(error.message);
-        }
+      try {
+        const data = await ProposalApi.getProposals(memberId);
+        setProposals(data);
+      } catch (error) {
+        console.error('Error fetching proposals:', error);
+      }
     };
 
-    useEffect(() => {
-        fetchProposals();
-    }, []);
+    fetchProposals();
+  }, [memberId]);
 
-    return (
-        <div className="proposal-page">
-            <h1>Proposals</h1>
-            {error && <div className="error">Error: {error}</div>}
-            <ProposalForm isAdmin={isAdmin} memberId={memberId} onProposalSubmitted={fetchProposals} />
-            <ul>
-                {proposals.map((proposal) => (
-                    <li key={proposal.id}>{proposal.content}</li>
-                ))}
-            </ul>
-            {isAdmin && <AdminProposalPage />}
-        </div>
-    );
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await ProposalApi.checkIsAdmin(memberId);
+        setIsAdmin(response.isAdmin); 
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      }
+    };
+
+    checkAdminStatus();
+  }, [memberId]);
+
+  return (
+    <div>
+      {isAdmin ? (
+        <AdminProposalPage proposals={proposals} />
+      ) : (
+        <ProposalForm proposals={proposals} />
+      )}
+    </div>
+  );
 };
 
 export default ProposalPage;

@@ -79,7 +79,7 @@ function App() {
             <Route path="/manageMember/:memberId" element={<MemberPage />} />
             <Route path='/hierarchyTree' element={<HierarchyTree />} />
             <Route path='/approvals/:approvalNo' element={<ApprovalDetail />}/>
-            <Route path='/proposal' element={<ProposalPage />}/>
+            <Route path="/ProposalPage" element={<ProposalPage />} />
           </Route>
         ) : (
           <Route path="/" element={<Navigate to="/login" replace />} />

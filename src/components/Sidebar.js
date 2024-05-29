@@ -151,7 +151,7 @@ function Sidebar() {
                     </Link>
                 </li>
                 <li className={`nav-item ${location.pathname === '/ProposalPage' ? 'active' : ''}`}>
-                    <Link className={`nav-link ${location.pathname === '/ProposalPage' ? '' : 'nav-link-main-cal collapsed'}`} to="/">
+                    <Link className={`nav-link ${location.pathname === '/ProposalPage' ? '' : 'nav-link-main-cal collapsed'}`} to="/ProposalPage">
                         <i className="bi bi-exclamation-square"></i><span>건의함</span>
                     </Link>
                 </li>

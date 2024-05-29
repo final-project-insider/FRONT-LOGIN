@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createProposal } from '/apis/ProposalApi';
+import ProposalApi from '../../apis/ProposalApi';
 
 const ProposalForm = ({ isAdmin = false, memberId = 240503532, onProposalSubmitted }) => {
     const [content, setContent] = useState('');
@@ -8,11 +8,8 @@ const ProposalForm = ({ isAdmin = false, memberId = 240503532, onProposalSubmitt
         event.preventDefault();
         if (content.trim()) {
             try {
-                await createProposal({
-                    menuId: 240528292,
-                    emotion: 11,
-                    content: content,
-                });
+                // ProposalApi에서 제공하는 sendProposal 함수 호출
+                await ProposalApi.sendProposal(content, memberId);
                 setContent('');
                 if (onProposalSubmitted) {
                     onProposalSubmitted();

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProposals } from '../apis/ProposalApi';
-
+import { getProposals } from '../../apis/ProposalApi';
 const MemberProposalPage = ({ memberId }) => {
     const [proposals, setProposals] = useState([]);
     const [error, setError] = useState(null);

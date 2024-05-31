@@ -377,7 +377,7 @@ const ApproverModal = ({ isOpen, onRequestClose, onSave, selectedApproverLine, s
             <CancelModal
                 isOpen={isCancelMocalOpen}
                 message={<><div>결재자 선택창을 닫으시겠습니까?</div>
-                    <div>마지막 저장 후 수정된 내용은<br></br>저장되지 않습니다.</div></>}
+                    <div>마지막 저장 후 수정된 내용은 저장되지 않습니다.</div></>}
                 onConfirm={handleConfirmClose}
                 onCancel={handleCancelClose}
             />

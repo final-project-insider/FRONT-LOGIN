@@ -145,7 +145,7 @@ const ApprovalInsert = () => {
             return false;
         }
 
-        if (status === '처리 중' && strippedFormContent === '' || strippedFormContent === strippedInitialFormContent) {
+        if (status === '처리 중' && (strippedFormContent === '' || strippedFormContent === strippedInitialFormContent)) {
             setWarningMessage('결재 내용이 입력되지 않았습니다');
             setIsWarrningModalOpen(true);
             return false;

@@ -91,7 +91,7 @@ function InsertAnnounce() {
                             <div className="row mb-3">
                                 <label htmlFor="inputText" className="col-sm-1 col-form-label">제목</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" id="inputText" placeholder="제목을 입력해주세요" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                                    <input type="text" className="form-control" id="inputText" placeholder="제목을 입력해주세요" value={title} onChange={(e) => setTitle(e.target.value)} />
                                 </div>
                             </div>
                             <div className="row mb-3">

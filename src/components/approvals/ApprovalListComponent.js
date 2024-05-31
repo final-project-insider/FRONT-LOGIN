@@ -15,7 +15,7 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
     };
 
     const truncateName = (name, maxLength = 6) => {
-        if(name.length > maxLength) {
+        if (name.length > maxLength) {
             return name.slice(0, 5) + '...';
         }
         return name;
@@ -35,8 +35,8 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                         className={`${styles.approver} ${approver.name === currentApprover ? styles.currentApprover : ''}`}
                     >
                         {truncateName(approver.name)}
-                        {(index + 1) % 3 === 0 && index !== approvers.length - 1 && <br />}
-                        {(index !== approvers.length -1 && (index + 1) % 3 !== 0) && ' - '}
+                        {/* {(index + 1) % 3 === 0 && index !== approvers.length - 1 && <br />} */}
+                        {(index !== approvers.length - 1 /* && (index + 1) % 3 !== 0 */) && ' - '}
                     </span>
                 ))}
             </div>
@@ -51,22 +51,30 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                     <tr>
                         {fg === 'given' || fg === 'tempGiven' ? (
                             <>
-                                <th onClick={handleSortDirectionChange} style={{ cursor: 'pointer' }}>
-                                    {fg === 'given' ? '기안 일시' : '저장 일시'}
-                                    <i className={`bx ${new URLSearchParams(window.location.search).get("direction") === 'ASC' ? 'bx-sort-up' : 'bx-sort-down'} ${styles.sortIcon}`}></i>
-                                </th>
-                                <th>양식</th>
-                                <th>제목</th>
-                                {fg === 'given' && <th>결재선</th>}
+                                {fg === 'given' ? (
+                                    <th onClick={handleSortDirectionChange} style={{ cursor: 'pointer', width: '200px' }}>
+                                        기안 일시
+                                        <i className={`bx ${new URLSearchParams(window.location.search).get("direction") === 'ASC' ? 'bx-sort-up' : 'bx-sort-down'} ${styles.sortIcon}`}></i>
+                                    </th>
+                                ) : (
+                                    <th onClick={handleSortDirectionChange} style={{ cursor: 'pointer' }}>
+                                        저장 일시
+                                        <i className={`bx ${new URLSearchParams(window.location.search).get("direction") === 'ASC' ? 'bx-sort-up' : 'bx-sort-down'} ${styles.sortIcon}`}></i>
+                                    </th>
+                                )}
+                                {fg !== 'given' && <th>양식</th>}
+                                <th style={{ width: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>제목</th>
+                                {fg === 'given' && <th style={{ width: '450px' }}>결재선</th>}
                                 {fg === 'tempGiven' ? (
                                     <th>삭제</th>
                                 ) : (
-                                    <th>상태</th>
+                                    <th style={{ width: '100px' }}>상태</th>
                                 )}
+                                {fg === 'given' && <th style={{ width: '200px' }}>처리일시</th>}
                             </>
                         ) : (
                             <>
-                                <th>제목</th>
+                                <th >제목</th>
                                 <th>기안자</th>
                                 <th>기안부서</th>
                                 {fg === 'received' && <th>상태</th>}
@@ -82,7 +90,12 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                 <tbody>
                     {loading ? (
                         <tr>
-                            <td colSpan="4" className={styles.loadingMessage}>전자결재 목록을 불러오는 중입니다...</td>
+                            {fg === 'given' || fg === 'received'? (
+                                <td colSpan="5" className={styles.loadingMessage}>전자결재 목록을 불러오는 중입니다...</td>
+                            ) : (
+                                <td colSpan="4" className={styles.loadingMessage}>전자결재 목록을 불러오는 중입니다...</td>
+                            )}
+                            
                         </tr>
                     ) : error ? (
                         <tr>
@@ -95,11 +108,13 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                             const approverStatus = approver ? approver.approverStatus : '';
 
                             return (
-                                <tr key={approval.approvalNo} onClick={() => handleRowClick(approval.approvalNo)}>
+                                <tr key={approval.approvalNo} onClick={() => {fg === 'tempGiven' ? handleRowClick(approval.approvalNo) : navigate(`/approvals/tempRewrite/${approval.approvalNo}`); }}>
                                     {fg === 'given' || fg === 'tempGiven' ? (
                                         <>
                                             <td>{approval.approvalDate}</td>
-                                            <td>{approval.formName}</td>
+                                            {fg !== 'given' && (
+                                                <td>{approval.formName}</td>
+                                            )}
                                             <td>{approval.approvalTitle}</td>
                                             {fg === 'given' && (
                                                 <td>
@@ -119,7 +134,6 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                                                     {approval.approvalStatus === "승인" || approval.approvalStatus === "반려" ? (
                                                         <div>
                                                             <div>{approval.approvalStatus}</div>
-                                                            <div>{approval.finalApproverDate}</div>
                                                         </div>
                                                     ) : approval.approvalStatus == "처리 중" ? (
                                                         <div>
@@ -128,6 +142,11 @@ const ApprovalListComponent = ({ approvals, fg, handleDeleteClick, handleSortDir
                                                     ) : (
                                                         <div>{approval.approvalStatus}</div>
                                                     )}
+                                                </td>
+                                            )}
+                                            {fg === 'given' && (
+                                                <td>
+                                                    <div>{approval.finalApproverDate}</div>
                                                 </td>
                                             )}
                                         </>

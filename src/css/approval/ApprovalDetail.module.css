@@ -208,7 +208,7 @@
 .actionBox{
     display: flex;
     flex-direction: column;
-    padding-left: 170px;
+    padding-left: 90px;
     margin-top: 80px;
     width: 100%;
 }

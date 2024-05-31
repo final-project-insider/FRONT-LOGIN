@@ -23,15 +23,23 @@
     font-size: 16px;
 }
 .ApprovalListTable th, .ApprovalListTable td{
-    padding: 25px;
-    border : none;
+   
+    border: none;
     border-bottom: 1px solid #D5D5D5;
-    font-weight:500;
-    height: 70px;
+    font-weight: 500;
+    height: 50px;
     max-height: 70px;
     min-width: 250px;
-    width: 250px;
     
+}
+.ApprovalListTable td {
+    border: none;
+    border-bottom: 1px solid #D5D5D5;
+    font-weight: 500;
+    height: 60px;
+    max-height: 70px;
+    min-width: 250px;
+    padding: 0px;
 }
 .ApprovalListTable th{
     font-weight: 900;

@@ -108,7 +108,7 @@ function HierarchyTree() {
         const departments = {};
     
         memberLists.forEach(member => {
-            const { positionDTO, name, departmentDTO, memberId } = member;
+            const { positionDTO, name, departmentDTO, memberId, employedDate } = member;
             const { positionLevel, positionName } = positionDTO;
             const { departName } = departmentDTO;
     
@@ -126,21 +126,26 @@ function HierarchyTree() {
                     attributes: [positionName],
                     positionLevel: parseInt(positionLevel),
                     memberId, // Add memberId
+                    employedDate: new Date(employedDate), // Parse employedDate to Date object
                     children: []
                 });
             }
         });
     
-        // Ensure the children under departments are sorted vertically
+        // Ensure the children under departments are sorted vertically by positionLevel, then by employedDate
         chart.children = Object.values(departments).map(department => {
-            department.children.sort((a, b) => a.positionLevel - b.positionLevel);
+            department.children.sort((a, b) => {
+                if (a.positionLevel === b.positionLevel) {
+                    return a.employedDate - b.employedDate;
+                }
+                return a.positionLevel - b.positionLevel;
+            });
             return department;
         });
     
         console.log('Generated organizational chart:', chart);
         return chart;
     };
-    
 
     const svgSquare = (width, height) => ({
         shape: "rect",
@@ -175,7 +180,8 @@ function HierarchyTree() {
                             fill="black" 
                             ontStyle="normal"
                             fontSize="16"
-                            fontWeight="600"
+                            stroke='none'
+                            fontWeight="500"
                             onClick={handleClick}
                             style={{ cursor: 'pointer' }}
                         >
@@ -187,7 +193,8 @@ function HierarchyTree() {
                             textAnchor="middle"
                             fill="black"
                             fontSize="14"
-                            fontWeight="400"
+                            fontWeight="500"
+                            stroke='none'
                             fontStyle="normal"
                             onClick={handleClick}
                             style={{ cursor: 'pointer' }}
@@ -202,7 +209,8 @@ function HierarchyTree() {
                         textAnchor="middle"
                         fill="black"
                         fontSize="16"
-                        fontWeight="600"
+                        fontWeight="500"
+                        stroke='none'
                         fontStyle="normal"
                         onClick={handleClick}
                         style={{ cursor: 'pointer' }}
@@ -213,7 +221,6 @@ function HierarchyTree() {
             </g>
         );
     };
-    
 
     const renderTree = () => {
         if (!organizationalChart) {
@@ -253,7 +260,6 @@ function HierarchyTree() {
             </div>
         );
     };
-    
 
     return (
         <main id="main" className="main">

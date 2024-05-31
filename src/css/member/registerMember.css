@@ -315,11 +315,6 @@ form input, form button, form select, form textarea {
     margin-left: 15px;
 }
 
-label {
-    /* display: block; */
-    /* margin-top: 1em; */
-}
-
 .req {
     color: red;
 }
